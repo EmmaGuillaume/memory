@@ -1,0 +1,25 @@
+name: Fid type on files
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+
+      - name: Create empty file and loop on it to find type
+        run: |
+          > empty_file
+          
+          for f in $(find . -type f -name "*.*"); do
+            file empty_file
+            echo "test"
+          done
+
+      - name: Vérifier le contenu
+        run: cat empty_file
