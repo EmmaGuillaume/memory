@@ -5,11 +5,11 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
+  test-memory-2026:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Create empty file and loop on it to find type
@@ -17,6 +17,15 @@ jobs:
           for f in $(find . -type f -name "*.*"); do
             cp "$f" empty_file
             file empty_file
-            echo "test"
           done
 
+  build-memory-2026:
+    runs-on: ubuntu-latest
+    needs: test-memory-2026   
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: |
+          docker build -t amekishibe/memory-2026 .
