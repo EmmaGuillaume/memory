@@ -46,14 +46,6 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026
 
   deploy-memory-2026:
-    runs-on: ubuntu-latest
-    needs: push-memory-2026
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup SSH
-        deploy-memory-2026:
   runs-on: ubuntu-latest
   needs: push-memory-2026
   steps:
