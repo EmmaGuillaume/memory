@@ -14,9 +14,8 @@ jobs:
 
       - name: Create empty file and loop on it to find type
         run: |
-          > empty_file
-          
           for f in $(find . -type f -name "*.*"); do
+            cp "$f" empty_file
             file empty_file
             echo "test"
           done
