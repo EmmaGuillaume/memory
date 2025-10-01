@@ -20,5 +20,3 @@ jobs:
             echo "test"
           done
 
-      - name: Vérifier le contenu
-        run: cat empty_file
