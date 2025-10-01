@@ -54,16 +54,6 @@ jobs:
 
       - name: Setup SSH
         run: |
-          mkdir -p ~/.ssh
-          cat <<EOF > ~/.ssh/id_ed25519
-          ${{ secrets.SSH_PRIVATE_KEY }}
-          EOF
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 217.26.206.84 >> ~/.ssh/known_hosts
-           
-
-
-      - name: Deploy to server
-        run: |
-          ssh -i ~/.ssh/id_ed25519 ubuntu@217.26.206.84 \
-          "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026 && docker run -d -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026"
+            echo ${{ secrets.SSH_PRIVATE_KEY }} > key.pem
+            chmod 600 key.pem
+            ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'docker pull ${{ secrets.DOCKERHUB_USERNAME }}/memory && docker run -d -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/memory'
