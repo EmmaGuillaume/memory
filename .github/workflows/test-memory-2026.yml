@@ -54,8 +54,6 @@ jobs:
 
       - name: Setup SSH and deploy Docker
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.pem
-          chmod 600 /tmp/key.pem
-
-          ssh -o StrictHostKeyChecking=no -i /tmp/key.pem ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026 && docker stop memory-2026 || true && docker rm memory-2026 || true && docker run -d --name memory-2026 -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026"
+          docker-compose pull
+          docker-compose down
+          docker-compose up -d --build
