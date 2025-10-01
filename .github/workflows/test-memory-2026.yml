@@ -39,6 +39,5 @@ jobs:
 
       - name: Push image on docker hub
         run: |
-          docker login -u amekishibe
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push amekishibe/memory-2026
